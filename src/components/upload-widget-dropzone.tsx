@@ -19,10 +19,10 @@ export function UploadWidgetDropzone() {
         {...getRootProps()}
       >
         <input {...getInputProps()} />
-        <span className="text-sx">Drop your files here or</span>
-        <span className="text-sx underline">click to open picker</span>
+        <span className="text-xs">Drop your files here or</span>
+        <span className="text-xs underline">click to open picker</span>
       </div>
-      <span className="text-sx text-zinc-400">
+      <span className="text-xs text-zinc-400">
         Only PNG and JPG files are supported.
       </span>
     </div>

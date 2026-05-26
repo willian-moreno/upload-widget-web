@@ -4,6 +4,8 @@
   --font-display: "Inter", sans-serif;
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
 
+  --text-xxs: 0.625rem;
+
   --opacity-2: 0.02;
 
   --shadow-shape:
