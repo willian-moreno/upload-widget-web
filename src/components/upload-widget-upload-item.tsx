@@ -13,7 +13,10 @@ export function UploadWidgetUploadItem() {
     >
       <div className="flex flex-col gap-1">
         <span className="text-xs font-medium flex items-center gap-1">
-          <ImageUp className="size-3 text-zinc-300" strokeWidth={1.5} />
+          <ImageUp
+            className="size-3 text-zinc-300"
+            strokeWidth={1.5}
+          />
           <span>screenshot.png</span>
         </span>
         <span className="flex items-center gap-1.5 text-xxs text-zinc-400">
@@ -37,19 +40,31 @@ export function UploadWidgetUploadItem() {
 
       <div className="flex items-center gap-1 absolute top-2.5 right-2.5">
         <Button size="icon-sm">
-          <Download className="size-4" strokeWidth={1.5} />
+          <Download
+            className="size-4"
+            strokeWidth={1.5}
+          />
           <span className="sr-only">Download compressed image</span>
         </Button>
         <Button size="icon-sm">
-          <Link2 className="size-4" strokeWidth={1.5} />
+          <Link2
+            className="size-4"
+            strokeWidth={1.5}
+          />
           <span className="sr-only">Copy remote URL</span>
         </Button>
         <Button size="icon-sm">
-          <RefreshCcw className="size-4" strokeWidth={1.5} />
+          <RefreshCcw
+            className="size-4"
+            strokeWidth={1.5}
+          />
           <span className="sr-only">Retry upload</span>
         </Button>
         <Button size="icon-sm">
-          <X className="size-4" strokeWidth={1.5} />
+          <X
+            className="size-4"
+            strokeWidth={1.5}
+          />
           <span className="sr-only">Cancel upload</span>
         </Button>
       </div>

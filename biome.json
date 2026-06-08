@@ -23,7 +23,8 @@
       "jsxQuoteStyle": "double",
       "quoteStyle": "single",
       "semicolons": "asNeeded",
-      "trailingCommas": "es5"
+      "trailingCommas": "es5",
+      "attributePosition": "multiline"
     }
   },
   "css": {

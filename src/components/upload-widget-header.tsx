@@ -8,8 +8,14 @@ export function UploadWidgetHeader() {
     <div className="w-full p-4 py-2 bg-white/2 border-zinc-800 border-b flex items-center justify-between">
       <UploadWidgetTitle />
       <Collapsible.Trigger asChild>
-        <Button size="icon" className="-mr-2">
-          <Minimize2 className="size-4" strokeWidth={1.5} />
+        <Button
+          size="icon"
+          className="-mr-2"
+        >
+          <Minimize2
+            className="size-4"
+            strokeWidth={1.5}
+          />
         </Button>
       </Collapsible.Trigger>
     </div>

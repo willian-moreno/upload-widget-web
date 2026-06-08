@@ -22,5 +22,10 @@ interface ButtonProps
     VariantProps<typeof buttonVariants> {}
 
 export function Button({ size, className, ...props }: ButtonProps) {
-  return <button className={buttonVariants({ size, className })} {...props} />
+  return (
+    <button
+      className={buttonVariants({ size, className })}
+      {...props}
+    />
+  )
 }

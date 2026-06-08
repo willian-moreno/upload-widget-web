@@ -19,8 +19,14 @@ export function CircularProgressBar({
   const progressOffset = circumference - (progress / 100) * circumference
 
   return (
-    <div className="relative" style={{ width: size, height: size }}>
-      <svg className="w-full h-full -rotate-90" viewBox={`0 0 ${size} ${size}`}>
+    <div
+      className="relative"
+      style={{ width: size, height: size }}
+    >
+      <svg
+        className="w-full h-full -rotate-90"
+        viewBox={`0 0 ${size} ${size}`}
+      >
         <title className="sr-only">{`Progresso ${progress}%`}</title>
         <circle
           className={`${circleColor} stroke-current`}
