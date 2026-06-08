@@ -2,7 +2,7 @@ import type { ComponentProps } from 'react'
 import { tv, type VariantProps } from 'tailwind-variants'
 
 const buttonVariants = tv({
-  base: 'text-zinc-400 rounded-lg cursor-pointer hover:text-zinc-100 hover:bg-zinc-800 disabled:opacity-50 disabled:pointer-events-none',
+  base: 'cursor-pointer rounded-lg text-zinc-400 hover:bg-zinc-800 hover:text-zinc-100 disabled:pointer-events-none disabled:opacity-50',
 
   variants: {
     size: {

@@ -6,13 +6,13 @@ import { Button } from './ui/button'
 export function UploadWidgetUploadItem() {
   return (
     <motion.div
-      className="flex flex-col gap-3 p-3 rounded-lg shadow-shape-content bg-white/2 relative overflow-hidden"
+      className="relative flex flex-col gap-3 overflow-hidden rounded-lg bg-white/2 p-3 shadow-shape-content"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
     >
       <div className="flex flex-col gap-1">
-        <span className="text-xs font-medium flex items-center gap-1">
+        <span className="flex items-center gap-1 font-medium text-xs">
           <ImageUp
             className="size-3 text-zinc-300"
             strokeWidth={1.5}
@@ -24,21 +24,21 @@ export function UploadWidgetUploadItem() {
           <div className="size-1 rounded-full bg-zinc-700" />
           <span>
             300KB
-            <span className="text-green-400 ml-1">-94%</span>
+            <span className="ml-1 text-green-400">-94%</span>
           </span>
           <div className="size-1 rounded-full bg-zinc-700" />
           <span>45%</span>
         </span>
       </div>
 
-      <Progress.Root className="group bg-zinc-800 rounded-full h-1 overflow-hidden">
+      <Progress.Root className="group h-1 overflow-hidden rounded-full bg-zinc-800">
         <Progress.Indicator
-          className="bg-indigo-500 h-1 rounded-full"
+          className="h-1 rounded-full bg-indigo-500"
           style={{ width: '43%' }}
         />
       </Progress.Root>
 
-      <div className="flex items-center gap-1 absolute top-2.5 right-2.5">
+      <div className="absolute top-2.5 right-2.5 flex items-center gap-1">
         <Button size="icon-sm">
           <Download
             className="size-4"

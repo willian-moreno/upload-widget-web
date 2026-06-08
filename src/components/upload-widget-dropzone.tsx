@@ -25,13 +25,13 @@ export function UploadWidgetDropzone() {
     >
       <div
         data-drag-active={isDragActive}
-        className="flex flex-col items-center justify-center gap-1 h-32 cursor-pointer text-zinc-400 bg-black/20 p-5 rounded-lg border border-zinc-700 border-dashed hover:border-zinc-600 transition-colors data-[drag-active=true]:bg-indigo-500/10 data-[drag-active=true]:border-indigo-500 data-[drag-active=true]:text-indigo-400"
+        className="flex h-32 cursor-pointer flex-col items-center justify-center gap-1 rounded-lg border border-zinc-700 border-dashed bg-black/20 p-5 text-zinc-400 transition-colors hover:border-zinc-600 data-[drag-active=true]:border-indigo-500 data-[drag-active=true]:bg-indigo-500/10 data-[drag-active=true]:text-indigo-400"
         {...getRootProps()}
       >
         <input {...getInputProps()} />
 
         {isThereAnyPendingUpload ? (
-          <div className="flex flex-col gap-2.5 items-center">
+          <div className="flex flex-col items-center gap-2.5">
             <CircularProgressBar
               progress={uploadGlobalPercentage}
               size={56}

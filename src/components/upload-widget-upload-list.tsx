@@ -5,7 +5,7 @@ export function UploadWidgetUploadList() {
 
   return (
     <div className="flex flex-col gap-3 px-3">
-      <span className="text-xs font-medium">
+      <span className="font-medium text-xs">
         Uploaded files <span>(2)</span>
       </span>
       {isUploadListEmpty ? (

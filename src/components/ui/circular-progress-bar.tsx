@@ -24,7 +24,7 @@ export function CircularProgressBar({
       style={{ width: size, height: size }}
     >
       <svg
-        className="w-full h-full -rotate-90"
+        className="h-full w-full -rotate-90"
         viewBox={`0 0 ${size} ${size}`}
       >
         <title className="sr-only">{`Progresso ${progress}%`}</title>
@@ -52,7 +52,7 @@ export function CircularProgressBar({
         />
       </svg>
       <div
-        className={`absolute inset-0 flex items-center justify-center text-xs font-medium text-zinc-50`}
+        className={`absolute inset-0 flex items-center justify-center font-medium text-xs text-zinc-50`}
       >
         {progress}
         <span className="text-xxs text-zinc-400">%</span>

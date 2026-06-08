@@ -38,7 +38,14 @@
       "react": "recommended"
     },
     "rules": {
-      "recommended": true
+      "recommended": true,
+      "nursery": {
+        "useSortedClasses": {
+          "level": "error",
+          "fix": "safe",
+          "options": {}
+        }
+      }
     }
   },
   "vcs": {

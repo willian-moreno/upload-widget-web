@@ -15,7 +15,7 @@ export function UploadWidget() {
       asChild
     >
       <motion.div
-        className="bg-zinc-900 w-full max-w-90 rounded-xl shadow-shape overflow-hidden"
+        className="w-full max-w-90 overflow-hidden rounded-xl bg-zinc-900 shadow-shape"
         animate={isWidgetOpen ? 'open' : 'closed'}
         variants={{
           open: {
@@ -39,7 +39,7 @@ export function UploadWidget() {
           <UploadWidgetHeader />
           <div className="flex flex-col gap-4 py-3">
             <UploadWidgetDropzone />
-            <div className="h-0.5 bg-zinc-800 border-t border-black/50" />
+            <div className="h-0.5 border-black/50 border-t bg-zinc-800" />
             <UploadWidgetUploadList />
           </div>
         </Collapsible.Content>

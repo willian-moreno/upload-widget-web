@@ -5,7 +5,7 @@ export function UploadWidgetTitle() {
   const uploadGlobalPercentage = 66
 
   return (
-    <div className="flex items-center gap-1.5 text-sm font-medium">
+    <div className="flex items-center gap-1.5 font-medium text-sm">
       <UploadCloud
         className="size-4 text-zinc-400"
         strokeWidth={1.5}
