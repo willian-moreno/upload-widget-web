@@ -10,27 +10,27 @@ export function UploadWidget() {
 
   return (
     <Collapsible.Root
-      open={isWidgetOpen}
-      onOpenChange={() => toggleWidgetOpen()}
       asChild
+      onOpenChange={() => toggleWidgetOpen()}
+      open={isWidgetOpen}
     >
       <motion.div
-        className="w-full max-w-90 overflow-hidden rounded-xl bg-zinc-900 shadow-shape"
         animate={isWidgetOpen ? 'open' : 'closed'}
+        className="w-full max-w-90 overflow-hidden rounded-xl bg-zinc-900 shadow-shape"
         variants={{
-          open: {
-            width: '100%',
-            height: 'auto',
-            transition: {
-              duration: 0.15,
-            },
-          },
           closed: {
-            width: 'max-content',
             height: 44,
             transition: {
               type: 'inertia',
             },
+            width: 'max-content',
+          },
+          open: {
+            height: 'auto',
+            transition: {
+              duration: 0.15,
+            },
+            width: '100%',
           },
         }}
       >

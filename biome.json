@@ -3,10 +3,27 @@
   "assist": {
     "actions": {
       "source": {
-        "organizeImports": "on"
+        "organizeImports": "on",
+        "useSortedAttributes": {
+          "level": "on",
+          "options": {
+            "sortOrder": "natural"
+          }
+        },
+        "useSortedKeys": {
+          "level": "on",
+          "options": {
+            "sortOrder": "natural"
+          }
+        }
       }
     },
     "enabled": true
+  },
+  "css": {
+    "parser": {
+      "tailwindDirectives": true
+    }
   },
   "files": {
     "ignoreUnknown": false
@@ -20,32 +37,27 @@
   "javascript": {
     "formatter": {
       "arrowParentheses": "asNeeded",
+      "attributePosition": "multiline",
       "jsxQuoteStyle": "double",
       "quoteStyle": "single",
       "semicolons": "asNeeded",
-      "trailingCommas": "es5",
-      "attributePosition": "multiline"
-    }
-  },
-  "css": {
-    "parser": {
-      "tailwindDirectives": true
+      "trailingCommas": "es5"
     }
   },
   "linter": {
-    "enabled": true,
     "domains": {
       "react": "recommended"
     },
+    "enabled": true,
     "rules": {
-      "recommended": true,
       "nursery": {
         "useSortedClasses": {
-          "level": "error",
           "fix": "safe",
+          "level": "error",
           "options": {}
         }
-      }
+      },
+      "recommended": true
     }
   },
   "vcs": {

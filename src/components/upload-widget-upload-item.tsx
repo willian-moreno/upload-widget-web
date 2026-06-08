@@ -6,9 +6,9 @@ import { Button } from './ui/button'
 export function UploadWidgetUploadItem() {
   return (
     <motion.div
+      animate={{ opacity: 1 }}
       className="relative flex flex-col gap-3 overflow-hidden rounded-lg bg-white/2 p-3 shadow-shape-content"
       initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
     >
       <div className="flex flex-col gap-1">

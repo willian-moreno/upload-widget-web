@@ -7,25 +7,25 @@ export function UploadWidgetDropzone() {
   const uploadGlobalPercentage = 66
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    multiple: true,
     accept: {
       'image/jpeg': [],
       'image/jpg': [],
       'image/png': [],
     },
+    multiple: true,
     onDrop() {},
   })
 
   return (
     <motion.div
+      animate={{ opacity: 1 }}
       className="flex flex-col gap-3 px-3"
       initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
       transition={{ duration: 0.3 }}
     >
       <div
-        data-drag-active={isDragActive}
         className="flex h-32 cursor-pointer flex-col items-center justify-center gap-1 rounded-lg border border-zinc-700 border-dashed bg-black/20 p-5 text-zinc-400 transition-colors hover:border-zinc-600 data-[drag-active=true]:border-indigo-500 data-[drag-active=true]:bg-indigo-500/10 data-[drag-active=true]:text-indigo-400"
+        data-drag-active={isDragActive}
         {...getRootProps()}
       >
         <input {...getInputProps()} />

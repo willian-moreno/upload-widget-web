@@ -9,8 +9,8 @@ export function UploadWidgetHeader() {
       <UploadWidgetTitle />
       <Collapsible.Trigger asChild>
         <Button
-          size="icon"
           className="-mr-2"
+          size="icon"
         >
           <Minimize2
             className="size-4"

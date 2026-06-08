@@ -21,7 +21,7 @@ export function CircularProgressBar({
   return (
     <div
       className="relative"
-      style={{ width: size, height: size }}
+      style={{ height: size, width: size }}
     >
       <svg
         className="h-full w-full -rotate-90"
@@ -30,20 +30,20 @@ export function CircularProgressBar({
         <title className="sr-only">{`Progresso ${progress}%`}</title>
         <circle
           className={`${circleColor} stroke-current`}
-          strokeWidth={strokeWidth}
-          fill="transparent"
-          r={radius}
           cx={center}
           cy={center}
+          fill="transparent"
+          r={radius}
+          strokeWidth={strokeWidth}
         />
         <circle
           className={`${progressColor} stroke-current`}
-          strokeWidth={strokeWidth}
-          strokeLinecap="round"
-          fill="transparent"
-          r={radius}
           cx={center}
           cy={center}
+          fill="transparent"
+          r={radius}
+          strokeLinecap="round"
+          strokeWidth={strokeWidth}
           style={{
             strokeDasharray: circumference,
             strokeDashoffset: progressOffset,
