@@ -10,12 +10,12 @@ export function UploadWidgetDropzone() {
   const { addUploads } = useUploads()
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    multiple: true,
     accept: {
       'image/jpeg': [],
       'image/jpg': [],
       'image/png': [],
     },
-    multiple: true,
     onDrop(acceptedFiles) {
       addUploads(acceptedFiles)
     },

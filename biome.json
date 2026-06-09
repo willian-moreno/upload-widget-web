@@ -1,6 +1,7 @@
 {
   "$schema": "https://biomejs.dev/schemas/2.4.15/schema.json",
   "assist": {
+    "enabled": true,
     "actions": {
       "source": {
         "organizeImports": "on",
@@ -13,12 +14,12 @@
         "useSortedKeys": {
           "level": "on",
           "options": {
+            "groupByNesting": true,
             "sortOrder": "natural"
           }
         }
       }
-    },
-    "enabled": true
+    }
   },
   "css": {
     "parser": {
@@ -45,19 +46,19 @@
     }
   },
   "linter": {
+    "enabled": true,
     "domains": {
       "react": "recommended"
     },
-    "enabled": true,
     "rules": {
+      "recommended": true,
       "nursery": {
         "useSortedClasses": {
           "fix": "safe",
           "level": "error",
           "options": {}
         }
-      },
-      "recommended": true
+      }
     }
   },
   "vcs": {

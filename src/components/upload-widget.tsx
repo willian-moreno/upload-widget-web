@@ -24,17 +24,17 @@ export function UploadWidget() {
           closed: {
             height: 44,
             maxWidth: 'max-content',
+            width: 'max-content',
             transition: {
               type: 'inertia',
             },
-            width: 'max-content',
           },
           open: {
             height: 'auto',
+            width: '100%',
             transition: {
               duration: 0.15,
             },
-            width: '100%',
           },
         }}
       >
