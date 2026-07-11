@@ -1,3 +1,4 @@
+import { isCancel } from 'axios'
 import { enableMapSet } from 'immer'
 import { create } from 'zustand'
 import { immer } from 'zustand/middleware/immer'
@@ -8,6 +9,8 @@ export type Upload = {
   file: File
   status: 'progress' | 'success' | 'error' | 'canceled'
   abortController: AbortController
+  originalSizeInBytes: number
+  uploadSizeInBytes: number
 }
 
 type UploadsState = {
@@ -31,6 +34,14 @@ export const useUploads = create<UploadsState, [['zustand/immer', never]]>(
         await uploadFileToStorage(
           {
             file: upload.file,
+            onProgress(sizeInBytes) {
+              set((state) => {
+                state.uploads.set(uploadId, {
+                  ...upload,
+                  uploadSizeInBytes: sizeInBytes,
+                })
+              })
+            },
           },
           {
             signal: upload.abortController.signal,
@@ -43,7 +54,18 @@ export const useUploads = create<UploadsState, [['zustand/immer', never]]>(
             status: 'success',
           })
         })
-      } catch {
+      } catch (error) {
+        if (isCancel(error)) {
+          set((state) => {
+            state.uploads.set(uploadId, {
+              ...upload,
+              status: 'canceled',
+            })
+          })
+
+          return
+        }
+
         set((state) => {
           state.uploads.set(uploadId, {
             ...upload,
@@ -61,13 +83,6 @@ export const useUploads = create<UploadsState, [['zustand/immer', never]]>(
       }
 
       upload.abortController.abort()
-
-      set((state) => {
-        state.uploads.set(uploadId, {
-          ...upload,
-          status: 'canceled',
-        })
-      })
     }
 
     function addUploads(files: File[]) {
@@ -78,6 +93,8 @@ export const useUploads = create<UploadsState, [['zustand/immer', never]]>(
           name: file.name,
           status: 'progress',
           abortController: new AbortController(),
+          originalSizeInBytes: file.size,
+          uploadSizeInBytes: 0,
         }
 
         set((state) => {
