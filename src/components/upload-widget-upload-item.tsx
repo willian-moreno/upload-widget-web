@@ -14,9 +14,19 @@ export function UploadWidgetUploadItem({ uploadId, upload }: UploadWidgetUploadI
   const cancelUpload = useUploads((store) => store.cancelUpload)
 
   const progress = Math.min(
-    Math.round((upload.uploadSizeInBytes * 100) / upload.originalSizeInBytes),
+    upload.compressedSizeInBytes
+      ? Math.round((upload.uploadSizeInBytes * 100) / upload.compressedSizeInBytes)
+      : 0,
     100,
   )
+
+  async function handleCopyRemoteUrl() {
+    if (!upload.remoteUrl) {
+      return
+    }
+
+    await navigator.clipboard.writeText(upload.remoteUrl)
+  }
 
   async function handleCancelUpload() {
     cancelUpload(uploadId)
@@ -76,7 +86,8 @@ export function UploadWidgetUploadItem({ uploadId, upload }: UploadWidgetUploadI
         </Button>
         <Button
           size="icon-sm"
-          disabled={upload.status !== 'success'}
+          disabled={!upload.remoteUrl}
+          onClick={handleCopyRemoteUrl}
         >
           <Link2
             className="size-4"
