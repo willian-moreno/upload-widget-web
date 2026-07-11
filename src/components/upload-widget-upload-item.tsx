@@ -1,8 +1,8 @@
 import * as Progress from '@radix-ui/react-progress'
-import axios from 'axios'
 import { Download, ImageUp, Link2, RefreshCcw, X } from 'lucide-react'
 import { motion } from 'motion/react'
 import { type Upload, useUploads } from '../store/uploads'
+import { downloadUrl } from '../utils/download-url'
 import { formatBytes } from '../utils/format-bytes'
 import { Button } from './ui/button'
 
@@ -12,7 +12,14 @@ interface UploadWidgetUploadItemProps {
 }
 
 export function UploadWidgetUploadItem({ uploadId, upload }: UploadWidgetUploadItemProps) {
+  const retryUpload = useUploads((store) => store.retryUpload)
+
   const cancelUpload = useUploads((store) => store.cancelUpload)
+
+  const reducedFileName =
+    upload.name.length <= 30
+      ? upload.name
+      : upload.name.replace(/^(.{15}).+(.{5}\.\w+)$/, '$1...$2')
 
   const progressPercentage = Math.min(
     upload.compressedSizeInBytes
@@ -26,32 +33,11 @@ export function UploadWidgetUploadItem({ uploadId, upload }: UploadWidgetUploadI
     : 0
 
   async function handleDownloadCompressedImage() {
-    if (!upload.remoteUrl || !upload.compressedFile) {
+    if (!upload.remoteUrl || !upload.compressedName) {
       return
     }
 
-    try {
-      const { data } = await axios.get(upload.remoteUrl, {
-        responseType: 'blob',
-      })
-
-      const blobUrl = window.URL.createObjectURL(new Blob([data]))
-
-      const link = document.createElement('a')
-
-      link.href = blobUrl
-      link.download = upload.compressedFile.name
-
-      document.body.appendChild(link)
-
-      link.click()
-
-      document.body.removeChild(link)
-
-      URL.revokeObjectURL(blobUrl)
-    } catch (error) {
-      console.error(error)
-    }
+    await downloadUrl(upload.remoteUrl, upload.compressedName)
   }
 
   async function handleCopyRemoteUrl() {
@@ -60,6 +46,10 @@ export function UploadWidgetUploadItem({ uploadId, upload }: UploadWidgetUploadI
     }
 
     await navigator.clipboard.writeText(upload.remoteUrl)
+  }
+
+  async function handleRetryUpload() {
+    retryUpload(uploadId)
   }
 
   async function handleCancelUpload() {
@@ -79,7 +69,7 @@ export function UploadWidgetUploadItem({ uploadId, upload }: UploadWidgetUploadI
             className="size-3 text-zinc-300"
             strokeWidth={1.5}
           />
-          <span>{upload.name}</span>
+          <span>{reducedFileName}</span>
         </span>
         <span className="flex items-center gap-1.5 text-xxs text-zinc-400">
           <span className="line-through">{formatBytes(upload.originalSizeInBytes)}</span>
@@ -109,7 +99,7 @@ export function UploadWidgetUploadItem({ uploadId, upload }: UploadWidgetUploadI
         />
       </Progress.Root>
 
-      <div className="absolute top-2.5 right-2.5 flex items-center gap-1">
+      <div className="absolute top-2 right-2 flex items-center gap-1">
         <Button
           size="icon-sm"
           disabled={upload.status !== 'success'}
@@ -135,6 +125,7 @@ export function UploadWidgetUploadItem({ uploadId, upload }: UploadWidgetUploadI
         <Button
           size="icon-sm"
           disabled={!['canceled', 'error'].includes(upload.status)}
+          onClick={handleRetryUpload}
         >
           <RefreshCcw
             className="size-4"
