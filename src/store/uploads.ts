@@ -6,11 +6,14 @@ import { uploadFileToStorage } from '../http/upload-file-to-storage'
 export type Upload = {
   name: string
   file: File
+  status: 'progress' | 'success' | 'error' | 'canceled'
+  abortController: AbortController
 }
 
 type UploadsState = {
   uploads: Map<string, Upload>
   addUploads: (files: File[]) => void
+  cancelUpload: (uploadId: string) => void
 }
 
 enableMapSet()
@@ -24,8 +27,46 @@ export const useUploads = create<UploadsState, [['zustand/immer', never]]>(
         return
       }
 
-      await uploadFileToStorage({
-        file: upload.file,
+      try {
+        await uploadFileToStorage(
+          {
+            file: upload.file,
+          },
+          {
+            signal: upload.abortController.signal,
+          },
+        )
+
+        set((state) => {
+          state.uploads.set(uploadId, {
+            ...upload,
+            status: 'success',
+          })
+        })
+      } catch {
+        set((state) => {
+          state.uploads.set(uploadId, {
+            ...upload,
+            status: 'error',
+          })
+        })
+      }
+    }
+
+    async function cancelUpload(uploadId: string) {
+      const upload = get().uploads.get(uploadId)
+
+      if (!upload) {
+        return
+      }
+
+      upload.abortController.abort()
+
+      set((state) => {
+        state.uploads.set(uploadId, {
+          ...upload,
+          status: 'canceled',
+        })
       })
     }
 
@@ -35,6 +76,8 @@ export const useUploads = create<UploadsState, [['zustand/immer', never]]>(
         const upload: Upload = {
           file,
           name: file.name,
+          status: 'progress',
+          abortController: new AbortController(),
         }
 
         set((state) => {
@@ -49,6 +92,7 @@ export const useUploads = create<UploadsState, [['zustand/immer', never]]>(
 
     return {
       addUploads,
+      cancelUpload,
       uploads: new Map(),
     }
   }),

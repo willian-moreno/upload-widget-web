@@ -2,7 +2,7 @@ import { useUploads } from '../store/uploads'
 import { UploadWidgetUploadItem } from './upload-widget-upload-item'
 
 export function UploadWidgetUploadList() {
-  const uploads = useUploads(state => state.uploads)
+  const uploads = useUploads((state) => state.uploads)
 
   const isUploadListEmpty = uploads.size === 0
 
@@ -18,6 +18,7 @@ export function UploadWidgetUploadList() {
           {[...uploads.entries()].map(([uploadId, upload]) => (
             <UploadWidgetUploadItem
               key={uploadId}
+              uploadId={uploadId}
               upload={upload}
             />
           ))}
