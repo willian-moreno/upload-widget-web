@@ -1,4 +1,5 @@
 import * as Progress from '@radix-ui/react-progress'
+import axios from 'axios'
 import { Download, ImageUp, Link2, RefreshCcw, X } from 'lucide-react'
 import { motion } from 'motion/react'
 import { type Upload, useUploads } from '../store/uploads'
@@ -13,12 +14,45 @@ interface UploadWidgetUploadItemProps {
 export function UploadWidgetUploadItem({ uploadId, upload }: UploadWidgetUploadItemProps) {
   const cancelUpload = useUploads((store) => store.cancelUpload)
 
-  const progress = Math.min(
+  const progressPercentage = Math.min(
     upload.compressedSizeInBytes
       ? Math.round((upload.uploadSizeInBytes * 100) / upload.compressedSizeInBytes)
       : 0,
     100,
   )
+
+  const reducedPercentageOfBytes = upload.compressedSizeInBytes
+    ? Math.round((1 - upload.compressedSizeInBytes / upload.originalSizeInBytes) * 100)
+    : 0
+
+  async function handleDownloadCompressedImage() {
+    if (!upload.remoteUrl || !upload.compressedFile) {
+      return
+    }
+
+    try {
+      const { data } = await axios.get(upload.remoteUrl, {
+        responseType: 'blob',
+      })
+
+      const blobUrl = window.URL.createObjectURL(new Blob([data]))
+
+      const link = document.createElement('a')
+
+      link.href = blobUrl
+      link.download = upload.compressedFile.name
+
+      document.body.appendChild(link)
+
+      link.click()
+
+      document.body.removeChild(link)
+
+      URL.revokeObjectURL(blobUrl)
+    } catch (error) {
+      console.error(error)
+    }
+  }
 
   async function handleCopyRemoteUrl() {
     if (!upload.remoteUrl) {
@@ -51,25 +85,27 @@ export function UploadWidgetUploadItem({ uploadId, upload }: UploadWidgetUploadI
           <span className="line-through">{formatBytes(upload.originalSizeInBytes)}</span>
           <div className="size-1 rounded-full bg-zinc-700" />
           <span>
-            300KB
-            <span className="ml-1 text-green-400">-94%</span>
+            {formatBytes(upload.compressedSizeInBytes ?? 0)}
+            {upload.compressedSizeInBytes && (
+              <span className="ml-1 text-green-400">-{reducedPercentageOfBytes}%</span>
+            )}
           </span>
           <div className="size-1 rounded-full bg-zinc-700" />
           {upload.status === 'success' && <span>100%</span>}
-          {upload.status === 'progress' && <span>{progress}%</span>}
+          {upload.status === 'progress' && <span>{progressPercentage}%</span>}
           {upload.status === 'error' && <span className="text-red-400">Error</span>}
           {upload.status === 'canceled' && <span className="text-amber-400">Canceled</span>}
         </span>
       </div>
 
       <Progress.Root
-        value={progress}
+        value={progressPercentage}
         data-status={upload.status}
         className="group h-1 overflow-hidden rounded-full bg-zinc-800"
       >
         <Progress.Indicator
           className="h-1 rounded-full bg-indigo-500 group-data-[status=success]:bg-green-400 group-data-[status=error]:bg-red-400 group-data-[status=canceled]:bg-amber-400 transition-all"
-          style={{ width: upload.status === 'progress' ? `${progress}%` : '100%' }}
+          style={{ width: upload.status === 'progress' ? `${progressPercentage}%` : '100%' }}
         />
       </Progress.Root>
 
@@ -77,6 +113,7 @@ export function UploadWidgetUploadItem({ uploadId, upload }: UploadWidgetUploadI
         <Button
           size="icon-sm"
           disabled={upload.status !== 'success'}
+          onClick={handleDownloadCompressedImage}
         >
           <Download
             className="size-4"

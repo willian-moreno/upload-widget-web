@@ -9,6 +9,7 @@ import { compressImage } from '../utils/compress-image'
 export type Upload = {
   name: string
   file: File
+  compressedFile?: File
   status: 'progress' | 'success' | 'error' | 'canceled'
   abortController: AbortController
   originalSizeInBytes: number
@@ -57,7 +58,10 @@ export const useUploads = create<UploadsState, [['zustand/immer', never]]>(
           quality: 0.8,
         })
 
-        updateUpload(uploadId, { compressedSizeInBytes: compressedFile.size })
+        updateUpload(uploadId, {
+          compressedFile: compressedFile,
+          compressedSizeInBytes: compressedFile.size,
+        })
 
         const { url } = await uploadFileToStorage(
           {
