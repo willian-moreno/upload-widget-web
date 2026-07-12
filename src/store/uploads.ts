@@ -58,15 +58,15 @@ export const useUploads = create<UploadsState, [['zustand/immer', never]]>(
         status: 'progress',
         abortController,
         compressedSizeInBytes: 0,
-        uploadSizeInBytes: 0,
         remoteUrl: undefined,
+        uploadSizeInBytes: 0,
       })
 
       try {
         const compressedFile = await compressImage({
           file: upload.file,
-          maxWidth: 1000,
           maxHeight: 1000,
+          maxWidth: 1000,
           quality: 0.8,
         })
 
@@ -87,7 +87,7 @@ export const useUploads = create<UploadsState, [['zustand/immer', never]]>(
           },
         )
 
-        updateUpload(uploadId, { status: 'success', remoteUrl: url })
+        updateUpload(uploadId, { remoteUrl: url, status: 'success' })
       } catch (error) {
         if (isCancel(error)) {
           updateUpload(uploadId, { status: 'canceled' })
@@ -105,8 +105,8 @@ export const useUploads = create<UploadsState, [['zustand/immer', never]]>(
         const upload: Upload = {
           file,
           name: file.name,
-          status: 'progress',
           originalSizeInBytes: file.size,
+          status: 'progress',
           uploadSizeInBytes: 0,
         }
 

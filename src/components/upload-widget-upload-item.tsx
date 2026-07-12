@@ -11,10 +11,13 @@ interface UploadWidgetUploadItemProps {
   upload: Upload
 }
 
-export function UploadWidgetUploadItem({ uploadId, upload }: UploadWidgetUploadItemProps) {
-  const retryUpload = useUploads((store) => store.retryUpload)
+export function UploadWidgetUploadItem({
+  uploadId,
+  upload,
+}: UploadWidgetUploadItemProps) {
+  const retryUpload = useUploads(store => store.retryUpload)
 
-  const cancelUpload = useUploads((store) => store.cancelUpload)
+  const cancelUpload = useUploads(store => store.cancelUpload)
 
   const reducedFileName =
     upload.name.length <= 30
@@ -23,13 +26,17 @@ export function UploadWidgetUploadItem({ uploadId, upload }: UploadWidgetUploadI
 
   const progressPercentage = Math.min(
     upload.compressedSizeInBytes
-      ? Math.round((upload.uploadSizeInBytes * 100) / upload.compressedSizeInBytes)
+      ? Math.round(
+          (upload.uploadSizeInBytes * 100) / upload.compressedSizeInBytes
+        )
       : 0,
-    100,
+    100
   )
 
   const reducedPercentageOfBytes = upload.compressedSizeInBytes
-    ? Math.round((1 - upload.compressedSizeInBytes / upload.originalSizeInBytes) * 100)
+    ? Math.round(
+        (1 - upload.compressedSizeInBytes / upload.originalSizeInBytes) * 100
+      )
     : 0
 
   async function handleDownloadCompressedImage() {
@@ -72,38 +79,49 @@ export function UploadWidgetUploadItem({ uploadId, upload }: UploadWidgetUploadI
           <span>{reducedFileName}</span>
         </span>
         <span className="flex items-center gap-1.5 text-xxs text-zinc-400">
-          <span className="line-through">{formatBytes(upload.originalSizeInBytes)}</span>
+          <span className="line-through">
+            {formatBytes(upload.originalSizeInBytes)}
+          </span>
           <div className="size-1 rounded-full bg-zinc-700" />
           <span>
             {formatBytes(upload.compressedSizeInBytes ?? 0)}
             {upload.compressedSizeInBytes && (
-              <span className="ml-1 text-green-400">-{reducedPercentageOfBytes}%</span>
+              <span className="ml-1 text-green-400">
+                -{reducedPercentageOfBytes}%
+              </span>
             )}
           </span>
           <div className="size-1 rounded-full bg-zinc-700" />
           {upload.status === 'success' && <span>100%</span>}
           {upload.status === 'progress' && <span>{progressPercentage}%</span>}
-          {upload.status === 'error' && <span className="text-red-400">Error</span>}
-          {upload.status === 'canceled' && <span className="text-amber-400">Canceled</span>}
+          {upload.status === 'error' && (
+            <span className="text-red-400">Error</span>
+          )}
+          {upload.status === 'canceled' && (
+            <span className="text-amber-400">Canceled</span>
+          )}
         </span>
       </div>
 
       <Progress.Root
-        value={progressPercentage}
-        data-status={upload.status}
         className="group h-1 overflow-hidden rounded-full bg-zinc-800"
+        data-status={upload.status}
+        value={progressPercentage}
       >
         <Progress.Indicator
-          className="h-1 rounded-full bg-indigo-500 group-data-[status=success]:bg-green-400 group-data-[status=error]:bg-red-400 group-data-[status=canceled]:bg-amber-400 transition-all"
-          style={{ width: upload.status === 'progress' ? `${progressPercentage}%` : '100%' }}
+          className="h-1 rounded-full bg-indigo-500 transition-all group-data-[status=canceled]:bg-amber-400 group-data-[status=error]:bg-red-400 group-data-[status=success]:bg-green-400"
+          style={{
+            width:
+              upload.status === 'progress' ? `${progressPercentage}%` : '100%',
+          }}
         />
       </Progress.Root>
 
       <div className="absolute top-2 right-2 flex items-center gap-1">
         <Button
-          size="icon-sm"
           disabled={upload.status !== 'success'}
           onClick={handleDownloadCompressedImage}
+          size="icon-sm"
         >
           <Download
             className="size-4"
@@ -112,9 +130,9 @@ export function UploadWidgetUploadItem({ uploadId, upload }: UploadWidgetUploadI
           <span className="sr-only">Download compressed image</span>
         </Button>
         <Button
-          size="icon-sm"
           disabled={!upload.remoteUrl}
           onClick={handleCopyRemoteUrl}
+          size="icon-sm"
         >
           <Link2
             className="size-4"
@@ -123,9 +141,9 @@ export function UploadWidgetUploadItem({ uploadId, upload }: UploadWidgetUploadI
           <span className="sr-only">Copy remote URL</span>
         </Button>
         <Button
-          size="icon-sm"
           disabled={!['canceled', 'error'].includes(upload.status)}
           onClick={handleRetryUpload}
+          size="icon-sm"
         >
           <RefreshCcw
             className="size-4"
@@ -134,9 +152,9 @@ export function UploadWidgetUploadItem({ uploadId, upload }: UploadWidgetUploadI
           <span className="sr-only">Retry upload</span>
         </Button>
         <Button
-          size="icon-sm"
           disabled={upload.status !== 'progress'}
           onClick={handleCancelUpload}
+          size="icon-sm"
         >
           <X
             className="size-4"

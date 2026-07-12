@@ -13,7 +13,9 @@ export function UploadWidgetTitle() {
       {isThereAnyPendingUploads ? (
         <span className="flex items-baseline gap-1">
           Uploading
-          <span className="text-xs text-zinc-400 tabular-nums">{globalPercentage}%</span>
+          <span className="text-xs text-zinc-400 tabular-nums">
+            {globalPercentage}%
+          </span>
         </span>
       ) : (
         <span>Upload files</span>

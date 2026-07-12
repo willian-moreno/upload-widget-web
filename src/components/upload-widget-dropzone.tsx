@@ -4,9 +4,9 @@ import { usePendingUploads, useUploads } from '../store/uploads'
 import { CircularProgressBar } from './ui/circular-progress-bar'
 
 export function UploadWidgetDropzone() {
-  const amountOfUploads = useUploads((store) => store.uploads.size)
+  const amountOfUploads = useUploads(store => store.uploads.size)
 
-  const addUploads = useUploads((store) => store.addUploads)
+  const addUploads = useUploads(store => store.addUploads)
 
   const { isThereAnyPendingUploads, globalPercentage } = usePendingUploads()
 
@@ -43,7 +43,9 @@ export function UploadWidgetDropzone() {
               size={56}
               strokeWidth={4}
             />
-            <span className="text-xs">Uploading {amountOfUploads} files...</span>
+            <span className="text-xs">
+              Uploading {amountOfUploads} files...
+            </span>
           </div>
         ) : (
           <>
@@ -52,7 +54,9 @@ export function UploadWidgetDropzone() {
           </>
         )}
       </div>
-      <span className="text-xxs text-zinc-400">Only PNG and JPG files are supported.</span>
+      <span className="text-xxs text-zinc-400">
+        Only PNG and JPG files are supported.
+      </span>
     </motion.div>
   )
 }

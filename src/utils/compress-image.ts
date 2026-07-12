@@ -65,8 +65,8 @@ export function compressImage({
             }
 
             const compressedFile = new File([blob], convertToWebp(file.name), {
-              type: 'image/webp',
               lastModified: Date.now(),
+              type: 'image/webp',
             })
 
             resolve(compressedFile)
